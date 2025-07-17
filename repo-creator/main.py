@@ -56,7 +56,6 @@ async def main():
 
     sub = await js.pull_subscribe(
         subject=CREATE_SUBJECT,
-        # name=NATS_CONSUMER,
         stream=NATS_STREAM,
     )
 
@@ -117,7 +116,7 @@ async def publish_error_event(js, ce_subject, error_message):
         data={"error": error_message}
     )
     payload = to_json(error_event)
-    await js.publish(RESPONSE_SUBJECT, payload)
+    await js.publish(ERROR_SUBJECT, payload)
     print(f"Published error event: {error_message}")
 
 # GitHub repo creation logic

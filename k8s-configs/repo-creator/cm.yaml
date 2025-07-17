@@ -4,4 +4,4 @@ kind: ConfigMap
 metadata:
   name: repo-service-config
 data:
-  NATS_URL: nats://nats.default.svc.cluster.local:4222
+  NATS_URL: nats://nats.nats.svc.cluster.local:4222

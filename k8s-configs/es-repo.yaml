@@ -7,4 +7,4 @@ metadata:
 spec:
   collectResources: true
   messagingMatchCriteria:
-  - cloudEventSource: "repo.requester.codesalot.com"
+  - cloudEventSource: "repo.codesalot.com"
