@@ -97,7 +97,7 @@ async def main():
                 error_message = "Repository already exists or invalid request"
             else:
                 await publish_error_event(js, ERROR_SUBJECT, error_message)
-                return
+                continue  # Skip to next message
         except Exception as e:
             print(f"Unexpected error during message fetch: {e}")
             break
