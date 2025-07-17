@@ -95,9 +95,8 @@ async def main():
             print(error_message)
             if e.response.status_code == 422:
                 error_message = "Repository already exists or invalid request"
-            else:
-                await publish_error_event(js, ERROR_SUBJECT, error_message)
-                continue  # Skip to next message
+            await publish_error_event(js, ERROR_SUBJECT, error_message)
+            continue  # Skip to next message
         except Exception as e:
             print(f"Unexpected error during message fetch: {e}")
             break
@@ -117,7 +116,7 @@ async def publish_error_event(js, ce_subject, error_message):
     )
     payload = to_json(error_event)
     await js.publish(ERROR_SUBJECT, payload)
-    print(f"Published error event: {error_message}")
+    print(f"Published error: {error_message}")
 
 # GitHub repo creation logic
 async def create_github_repo(org, repo_name):
