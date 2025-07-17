@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argo-app-config
+  namespace: default
+  annotations:
+    projectsveltos.io/instantiate: ok
+data:
+  namespace.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: {{ .CloudEvent.subject }}
+      namespace: argocd
+      annotations:
+        projectsveltos.io/description: "ArgoCD Application for repo {{ ( index .CloudEvent.data `org` ) }}/{{ ( index .CloudEvent.data `name` ) }}"
+        projectsveltos.io/subject: {{ .CloudEvent.subject }}
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/{{ ( index .CloudEvent.data `org` ) }}/{{ ( index .CloudEvent.data `name` ) }}.git
+        targetRevision: HEAD
+        path: manifests
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: {{ ( index .CloudEvent.data `org` ) }}

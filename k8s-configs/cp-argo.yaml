@@ -1,0 +1,18 @@
+---
+apiVersion: config.projectsveltos.io/v1beta1
+kind: ClusterProfile
+metadata:
+  name: argocd-clusterprofile
+  namespace: projectsveltos
+spec:
+  clusterSelector:
+    matchLabels:
+      projectsveltos.io/role: management
+  helmCharts:
+  - repositoryName: argo
+    repositoryURL: https://argoproj.github.io/argo-helm
+    chartName: argo/argo-cd
+    chartVersion: 8.1.2
+    releaseName: argocd
+    releaseNamespace: argocd
+  syncMode: Continuous

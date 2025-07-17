@@ -1,0 +1,20 @@
+---
+apiVersion: lib.projectsveltos.io/v1beta1
+kind: EventTrigger
+metadata:
+  name: create-argo-app
+  namespace: projectsveltos
+  annotations:
+    projectsveltos.io/description: "Create ArgoCD Application when a repo is created"
+spec:
+  sourceClusterSelector:
+    matchLabels:
+      projectsveltos.io/role: management
+  eventSourceName: repo-requested
+  oneForEvent: true
+  syncMode: ContinuousWithDriftDetection
+  cloudEventAction: '{{if eq .CloudEvent.type "repo.requested"}}Create{{else if eq .CloudEvent.type "repo.error"}}Delete{{end}}'
+  policyRefs:
+  - name: argo-app-config
+    namespace: default
+    kind: ConfigMap

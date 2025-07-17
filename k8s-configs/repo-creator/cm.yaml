@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: repo-service-config
+data:
+  NATS_URL: nats://nats.default.svc.cluster.local:4222

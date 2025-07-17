@@ -1,0 +1,10 @@
+keys.txt
+.DS_Store
+.idea/
+**/*terraform
+**/*.tfstate
+**/*terraform.*
+**/*plan
+**/*.tfstate.*
+repo-service/venv/
+repo-service/__pycache__/

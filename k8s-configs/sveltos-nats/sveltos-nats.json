@@ -1,0 +1,21 @@
+{
+  "jetstream":
+   {
+     "configuration":
+        {
+            "url": "nats://nats.nats.svc.cluster.local:4222",
+            "streams": [
+                {
+                    "name": "REPOS",
+                    "subjects": ["repo.requested", "repo.error"]
+                }
+            ],
+            "authorization": {
+                "user": {
+                    "user": "sveltos",
+                    "password": "projectsveltos"
+                }
+            }
+        }
+   }
+}

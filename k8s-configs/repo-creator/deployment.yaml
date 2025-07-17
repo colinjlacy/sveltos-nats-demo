@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repo-service
+  labels:
+    app: repo-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: repo-service
+  template:
+    metadata:
+      labels:
+        app: repo-service
+    spec:
+      containers:
+        - name: repo-service
+          image: ghcr.io/colinjlacy/repo-creator:latest
+          env:
+            - name: NATS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: repo-service-config
+                  key: NATS_URL
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: repo-service-secret
+                  key: GITHUB_TOKEN
+            - name: NATS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: repo-service-secret
+                  key: NATS_USERNAME
+            - name: NATS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: repo-service-secret
+                  key: NATS_PASSWORD
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          imagePullPolicy: Always
+      restartPolicy: Always

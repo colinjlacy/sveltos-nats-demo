@@ -1,0 +1,10 @@
+---
+apiVersion: lib.projectsveltos.io/v1beta1
+kind: EventSource
+metadata:
+  name: repo-requested
+  namespace: projectsveltos
+spec:
+  collectResources: true
+  messagingMatchCriteria:
+  - cloudEventSource: "repo.requester.codesalot.com"
