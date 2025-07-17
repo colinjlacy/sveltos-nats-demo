@@ -5,7 +5,7 @@ from nats.aio.client import Client as NATS
 import httpx
 import uuid
 from datetime import datetime, timezone
-from cloudevents.http import conversion, CloudEvent
+from cloudevents.http import conversion, to_json, CloudEvent
 
 # Config
 NATS_URL = os.getenv("NATS_URL", "nats://127.0.0.1:4222")
@@ -85,7 +85,7 @@ async def main():
                         "url": repo_url
                     }
                 )
-                payload = conversion.to_json(response_event)
+                payload = to_json(response_event)
                 await js.publish(RESPONSE_SUBJECT, payload)
                 print(f"Published repo.created CloudEvent for {repo_url}")
 
@@ -115,7 +115,7 @@ async def publish_error_event(js, ce_subject, error_message):
         },
         data={"error": error_message}
     )
-    payload = conversion.to_json(error_event)
+    payload = to_json(error_event)
     await js.publish(ERROR_SUBJECT, payload)
     print(f"Published error message: {payload}")
 
