@@ -56,6 +56,7 @@ async def main():
 
     sub = await js.pull_subscribe(
         subject=CREATE_SUBJECT,
+        durable=NATS_CONSUMER,
         stream=NATS_STREAM,
     )
 
