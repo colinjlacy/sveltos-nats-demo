@@ -103,6 +103,7 @@ async def main():
             break
 
 async def publish_error_event(js, ce_subject, error_message):
+    await asyncio.sleep(20)  # Simulate delay before publishing error
     error_event = CloudEvent(
         attributes={
             "type": "repo.error",
