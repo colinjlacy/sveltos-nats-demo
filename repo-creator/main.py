@@ -74,7 +74,7 @@ async def main():
                 response_event = CloudEvent(
                     attributes={
                         "type": "repo.created",
-                        "source": "repo.creator.codesalot.com",
+                        "source": "repo.codesalot.com",
                         "id": str(uuid.uuid4()),
                         "time": datetime.now(timezone.utc).isoformat(),
                         "datacontenttype": "application/json",
@@ -107,7 +107,7 @@ async def publish_error_event(js, ce_subject, error_message):
     error_event = CloudEvent(
         attributes={
             "type": "repo.error",
-            "source": "repo.creator.codesalot.com",
+            "source": "repo.codesalot.com",
             "id": str(uuid.uuid4()),
             "time": datetime.now(timezone.utc).isoformat(),
             "datacontenttype": "application/json",
