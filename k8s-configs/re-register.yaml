@@ -1,3 +1,8 @@
+---
+# This is useful for Sveltos to re-register the management cluster
+# if you're using Kind and you put your computer to sleep.
+# Sveltos won't be able to refresh its acccess token on its own, so
+# you need to run this Job to re-register the management cluster.
 apiVersion: v1
 kind: Namespace
 metadata:
