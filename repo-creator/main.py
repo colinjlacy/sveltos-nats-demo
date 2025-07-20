@@ -96,7 +96,7 @@ async def main():
             print(error_message)
             if e.response.status_code == 422:
                 error_message = "Repository already exists or invalid request"
-            await publish_error_event(js, ce.subject, error_message)
+            await publish_error_event(js, ce.get("subject"), error_message)
             continue  # Skip to next message
         except Exception as e:
             print(f"Unexpected error during message fetch: {e}")
