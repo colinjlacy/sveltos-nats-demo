@@ -1,6 +1,6 @@
 # Sveltos/NATS Demo
 
-This repo serves as a demo for the integration between Sveltos and NATS, using the CloudEvents spec.
+This repo serves as a demo for the integration between Sveltos and NATS, using the CloudEvents spec. Check out [this video](https://youtu.be/bHjCiIP5f34) on YouTube for more info.
 
 ## Setup
 
