@@ -53,9 +53,11 @@ For transparency purposes, here's the contents of that JSON file, which set up o
      "configuration":
         {
             "url": "nats://nats.nats.svc.cluster.local:4222",
-            "subjects": [
-                "repo.requested",
-                "repo.error"
+            "streams": [
+                {
+                    "name": "REPOS",
+                    "subjects": ["repo.requested", "repo.error"]
+                }
             ],
             "authorization": {
                 "user": {
@@ -105,7 +107,7 @@ This next part assumes that you have the NATS CLI installed. If you don't, you c
 Depeding on how you exposed the NATS service, you'll add the NATS context to the NATS CLI using the following command:
 
 ```sh
-nats context add kind -s <exposed-lb-ip-or-localhost:<port>> --user=admin --password=admin --description="KindWithSveltos" --select
+nats context add kind -s <exposed-lb-ip-or-localhost:4222> --user=admin --password=admin --description="KindWithSveltos" --select
 ```
 
 Now you're all set to start working with your NATS installation via the CLI.
@@ -153,3 +155,43 @@ argocd login localhost:8080 --username=admin --password=${ARGOCD_PW}
 ## Run the Demo
 
 This is everyone's favorite part!!!
+
+**NOTE: Currently the success script is set up to create a repo in my demo `open-garlic` GitHub org.** Since you probably don't have access, you'll need to modify the success script to point to a GitHub org that you have access to. If you don't have one, consider making one. They're free.
+
+Once you've modified the success script, you can push a success event with the following command:
+
+```sh
+sh sh-scripts/success-event.sh
+```
+
+You should see a repo created in GitHub. Now check Argo:
+
+```sh
+argocd app list
+```
+
+You should also see an ArgoCD application matching your new repo. Hooray!
+
+To test the failure event, run:
+
+```sh
+sh sh-scripts/failure-event.sh
+```
+
+Quickly list your ArgoCD Applications to ensure that Sveltos properly added the new Application:
+
+```sh
+argocd app list
+```
+
+There should be two Applications now.
+
+You likely don't have access to create repos in the Microsoft org, so you probably don't need to check to make sure that a repo wasn't created. But feel free.
+
+After about 20 seconds, check again:
+
+```sh
+argocd app list
+```
+
+There should now be only one Application, the one that was created for the success event.
